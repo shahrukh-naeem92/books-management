@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Log;
+use Utils\Handlers\Entity\EntityFactory;
 
 /**
  * Class BooksController
@@ -10,7 +12,31 @@ use Illuminate\Http\Request;
  */
 class BooksController extends Controller
 {
-    public function externalBooks(Request $request)
+    /**
+     * Api for retrieving external book information
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function getBooksFromIceAndFireApi(Request $request) : array
     {
+        try {
+            $iceAndFireApi = EntityFactory::create('BooksEntity');
+
+            return [
+                "status_code" => 200,
+                "status" => "success",
+                "data" => $iceAndFireApi->getBooksFromIceAndFireApi($request->get('nameOfABook', ''))
+            ];
+        } catch (\Throwable $ex) {
+            Log::error($ex->getMessage());
+
+            return [
+                "status_code" => 500,
+                "status" => "failure",
+                "data" => []
+            ];
+        }
     }
 }
