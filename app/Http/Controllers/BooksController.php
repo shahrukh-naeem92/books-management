@@ -8,6 +8,7 @@ use Log;
 use Utils\Handlers\Entity\BooksEntity;
 use Utils\Handlers\Entity\EntityFactory;
 use App\Http\Requests\CreateBooks;
+use App\Http\Requests\GetAllBooks;
 
 /**
  * Class BooksController
@@ -25,12 +26,12 @@ class BooksController extends Controller
     public function getBooksFromIceAndFireApi(Request $request) : array
     {
         try {
-            $iceAndFireApi = EntityFactory::create('BooksEntity');
+            $book = $this->getBooksEntity();
 
             return [
                 "status_code" => 200,
                 "status" => "success",
-                "data" => $iceAndFireApi->getBooksFromIceAndFireApi($request->get('nameOfABook', ''))
+                "data" => $book->getBooksFromIceAndFireApi($request->get('nameOfABook', ''))
             ];
         } catch (\Throwable $ex) {
             Log::error($ex->getMessage());
@@ -42,6 +43,7 @@ class BooksController extends Controller
             ];
         }
     }
+
     /**
      * Api for creating new book
      *
@@ -52,7 +54,7 @@ class BooksController extends Controller
     public function createBook(CreateBooks $request) : array
     {
         try {
-            $book = new BooksEntity();
+            $book = $this->getBooksEntity();
 
             return [
                 "status_code" => 201,
@@ -68,5 +70,43 @@ class BooksController extends Controller
                 "data" => []
             ];
         }
+    }
+
+    /**
+     * Api for creating new book
+     *
+     * @param GetAllBooks $request
+     *
+     * @return array
+     */
+    public function getAllBooks(GetAllBooks $request) : array
+    {
+        try {
+            $book = $this->getBooksEntity();
+
+            return [
+                "status_code" => 200,
+                "status" => "success",
+                "data" => $book->getAllBooks($request->input())
+            ];
+        } catch (\Throwable $ex) {
+            Log::error($ex->getMessage());
+
+            return [
+                "status_code" => 500,
+                "status" => "failure",
+                "data" => []
+            ];
+        }
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return BooksEntity
+     */
+    private function getBooksEntity() : BooksEntity
+    {
+        return EntityFactory::create('BooksEntity');
     }
 }

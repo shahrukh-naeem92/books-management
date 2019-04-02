@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 /**
  * Class Books
  * @package App
@@ -13,6 +14,11 @@ class Books extends ModelAbstract
      * @var array
      */
     protected $hidden = ['created_at', 'updated_at'];
+
+    /**
+     * @var array
+     */
+    public static $filterable = ['id', 'name', 'country', 'publisher', 'release_date'];
 
     /**
      * @var array
@@ -63,5 +69,27 @@ class Books extends ModelAbstract
     public function getAuthors() : array
     {
         return is_string($this->authors) ? explode(',', $this->authors) : $this->authors;
+    }
+
+    /**
+     * Return all books that passes filters
+     *
+     * @param array $filters
+     * @param bool $filterByReleaseYearOnly
+     *
+     * @return Collection
+     */
+    public function getAllBooks(array $filters, bool $filterByReleaseYearOnly = true) : Collection
+    {
+        $actualFilters = array_intersect_key($filters, array_flip(Books::$filterable));
+        if ($filterByReleaseYearOnly && isset($actualFilters['release_date'])) {
+            unset($actualFilters['release_date']);
+        }
+        $query = self::where($actualFilters);
+        if ($filterByReleaseYearOnly && isset($filters['release_date'])) {
+            $query->whereYear('release_date', $filters['release_date']);
+        }
+
+        return $query->get();
     }
 }

@@ -4,7 +4,7 @@ namespace Utils\Handlers\Entity;
 
 use Utils\Api\ApiFactory;
 use App\Books;
-
+use Illuminate\Database\Eloquent\Collection;
 /**
  * Class BooksEntity
  * @package Utils\Handlers\Entity
@@ -38,7 +38,7 @@ class BooksEntity
      */
     public function create(array $data) : array
     {
-        $book = new Books();
+        $book = $this->getBook();
         $book->fill($data);
         if ($book->save()) {
             $book = $this->formatBook($book);
@@ -47,6 +47,37 @@ class BooksEntity
         } else {
             return [];
         }
+    }
+
+    /**
+     * Get all books that passes the provided filters
+     *
+     * @param array $filters
+     *
+     * @return array
+     */
+    public function getAllBooks(array $filters) : array
+    {
+        $book = $this->getBook();
+
+        return $this->formatBooks($book->getAllBooks($filters));
+    }
+
+    /**
+     * Format books array and return books array
+     *
+     * @param Collection $books
+     *
+     * @return array
+     */
+    private function formatBooks(Collection $books) : array
+    {
+        $bookArray = [];
+        foreach ($books as $book) {
+            $bookArray[] = $this->formatBook($book);
+        }
+
+        return $bookArray;
     }
 
     /**
@@ -60,6 +91,7 @@ class BooksEntity
     {
         $bookArray = $book->toArray();
         $bookArray['authors'] = $book->getAuthors();
+
         return $bookArray;
     }
 
@@ -87,4 +119,11 @@ class BooksEntity
         return $booksArray;
     }
 
+    /**
+     * @return Books
+     */
+    public function getBook() : Books
+    {
+        return new Books();
+    }
 }

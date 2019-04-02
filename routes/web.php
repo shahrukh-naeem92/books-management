@@ -19,5 +19,6 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->get('external-books', 'BooksController@getBooksFromIceAndFireApi');
     $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->post('books', 'BooksController@createBook');
+        $router->get('books', 'BooksController@getAllBooks');
     });
 });

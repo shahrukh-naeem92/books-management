@@ -3,10 +3,10 @@
 namespace App\Http\Requests;
 
 /**
- * Class CreateBooks
+ * Class GetAllBooks
  * @package App\Http\Requests
  */
-class CreateBooks extends RequestAbstract
+class GetAllBooks extends RequestAbstract
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,13 +26,10 @@ class CreateBooks extends RequestAbstract
     public function rules()
     {
         return [
-            "name" => "required|string|max:250",
-            "isbn" => "required|string|max:250",
-            "authors" => "required",
-            "country" => "required|string|max:250",
-            "number_of_pages" => "required|int",
-            "publisher" => "required|string|max:250",
-            "release_date" => "required|date",
+            'name' => 'string',
+            'country' => 'string',
+            'publisher' => 'string',
+            'release_date' => 'int',
         ];
     }
 }
