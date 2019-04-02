@@ -25,7 +25,8 @@ class CreateBooksTable extends Migration
             $table->string('publisher');
             $table->string('country');
             $table->date('release_date');
-            $table->timestamps();
+            $table->timestamp('created_at')->default(\DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('updated_at')->default(\DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
     }
 
