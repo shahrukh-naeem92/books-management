@@ -48,7 +48,7 @@ class IceAndFireApi
     }
 
     /**
-     * Get rest client of specified type for curl calls
+     * Get rest client for curl calls
      *
      * @throws \Exception
      *

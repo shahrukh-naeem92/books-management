@@ -28,7 +28,7 @@ class BaseModel extends Model
      *
      * @param  array  $options
      *
-     * @throws \Exception
+     * @throws \InvalidArgumentException
      *
      * @return bool
      */
@@ -44,6 +44,14 @@ class BaseModel extends Model
     }
 
     /**
+     * @return ParentValidator
+     */
+    public function getValidator() : ParentValidator
+    {
+        return $this->validator ?: $this->validator = Validator::make($this->toArray(), static::$rules);
+    }
+
+    /**
      * Validate current model before saving it to the database
      *
      * @return bool
@@ -54,15 +62,6 @@ class BaseModel extends Model
         $v = $this->getValidator();
         // return the result
         return $v->passes();
-    }
-
-
-    /**
-     * @return ParentValidator
-     */
-    public function getValidator() : ParentValidator
-    {
-        return $this->validator ?: $this->validator = Validator::make($this->toArray(), static::$rules);
     }
 
 }

@@ -26,9 +26,9 @@ class Utils
     }
 
     /**
-     * @return Utils
+     * @return self
      */
-    public static function getInstance()
+    public static function getInstance() : self
     {
         return static::$instance ?: static::$instance = new static();
     }
@@ -42,19 +42,8 @@ class Utils
      */
     public function getErrorMessagesFromValidator(Validator $validator) : string
     {
-        return $this->convertErrorsToString($validator->getMessageBag()->toArray());
-    }
-
-    /**
-     * Converts array of errors to comma separated string
-     *
-     * @param array $errors
-     *
-     * @return string
-     */
-    private function convertErrorsToString(array $errors) : string
-    {
         $errorArray = [];
+        $errors = $validator->getMessageBag()->toArray();
         foreach ($errors as $error) {
             $errorArray[] = implode(', ', $error);
         }

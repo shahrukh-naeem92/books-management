@@ -22,7 +22,7 @@ class BaseRequest extends RequestAbstract
     }
 
     /**
-     * Retuns all the form data from put request
+     * Returns all the form data from put request
      *
      * @return array
      */
@@ -30,7 +30,7 @@ class BaseRequest extends RequestAbstract
     {
         $putdata = fopen("php://input", "r");
         $raw_data = '';
-
+        $data = [];
         while ($chunk = fread($putdata, 1024)) {
             $raw_data .= $chunk;
         }

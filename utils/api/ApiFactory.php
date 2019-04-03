@@ -9,7 +9,7 @@ namespace Utils\Api;
 class ApiFactory
 {
     /**
-     * Creates objects for api handler classes
+     * Creates objects for api classes
      *
      * @param string $className
      * @param array $constructorArguments
