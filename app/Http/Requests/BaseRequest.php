@@ -23,8 +23,10 @@ class BaseRequest extends RequestAbstract
 
     /**
      * Retuns all the form data from put request
+     *
+     * @return array
      */
-    public function getParametersFromPutRequest()
+    public function getParametersFromPutRequest() : array
     {
         $putdata = fopen("php://input", "r");
         $raw_data = '';
@@ -110,9 +112,9 @@ class BaseRequest extends RequestAbstract
      *
      * @param  \Illuminate\Contracts\Validation\Validator  $validator
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
-    protected function formatErrors(Validator $validator)
+    protected function formatErrors(Validator $validator) : JsonResponse
     {
         return new JsonResponse(
             [

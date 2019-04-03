@@ -13,7 +13,7 @@ class CreateBooks extends BaseRequest
      *
      * @return bool
      */
-    public function authorize()
+    public function authorize() : bool
     {
         return true;
     }
@@ -23,7 +23,7 @@ class CreateBooks extends BaseRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules() : array
     {
         return [
             "name" => "required|string|max:250",
