@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Collection;
  * Class Books
  * @package App
  */
-class Books extends ModelAbstract
+class Books extends BaseModel
 {
 
     /**
@@ -91,5 +91,59 @@ class Books extends ModelAbstract
         }
 
         return $query->get();
+    }
+
+    /**
+     * Return book by id
+     *
+     * @param int $id
+     *
+     * @return null|self
+     */
+    public function getBookByID(int $id) : ?self
+    {
+
+        return self::where('id', $id)->first();
+    }
+
+    /**
+     * Deletes book by id and returns its name
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     *
+     * @return null|string
+     */
+    public function deleteBookByID(int $id) : ?string
+    {
+        $book = $this->getBookByID($id);
+
+        if ($book && $book->delete()) {
+           return $book->name;
+        }
+
+        return null;
+    }
+
+    /**
+     * Updates a book by id and returns that book
+     *
+     * @param int $id
+     * @param array $data
+     *
+     * @throws \Exception
+     *
+     * @return null|self
+     */
+    public function updateBookById(int $id, array $data) : ?self
+    {
+        $book = $this->getBookByID($id);
+
+        if ($book && $book->fill($data) && $book->save()) {
+           return $book;
+        }
+
+        return null;
     }
 }

@@ -20,5 +20,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->group(['prefix' => 'v1'], function () use ($router) {
         $router->post('books', 'BooksController@createBook');
         $router->get('books', 'BooksController@getAllBooks');
+        $router->get('books/{id:[0-9]+}', 'BooksController@getBook');
+        $router->delete('books/{id:[0-9]+}', 'BooksController@deleteBook');
+        $router->patch('books/{id:[0-9]+}', 'BooksController@updateBook');
     });
 });

@@ -6,7 +6,7 @@ namespace App\Http\Requests;
  * Class CreateBooks
  * @package App\Http\Requests
  */
-class CreateBooks extends RequestAbstract
+class CreateBooks extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.

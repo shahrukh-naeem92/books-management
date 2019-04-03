@@ -8,10 +8,10 @@ use Illuminate\Contracts\Validation\Validator as ParentValidator;
 use Utils\Utils;
 
 /**
- * Class ModelAbstract
+ * Class BaseModel
  * @package App
  */
-class ModelAbstract extends Model
+class BaseModel extends Model
 {
     /**
      * @var

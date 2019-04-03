@@ -64,6 +64,61 @@ class BooksEntity
     }
 
     /**
+     * Get book by id
+     *
+     * @param int $id
+     *
+     * @return array
+     */
+    public function getBookByID(int $id) : array
+    {
+        $bookModel = $this->getBook();
+        $book = $bookModel->getBookByID($id);
+        if ($book) {
+            return $this->formatBook($book);
+        }
+
+        return [];
+    }
+
+    /**
+     * Delete book by id
+     *
+     * @param int $id
+     *
+     * @throws \Exception
+     *
+     * @return null|string
+     */
+    public function deleteBookById(int $id) : ?string
+    {
+        $book = $this->getBook();
+
+        return $book->deleteBookById($id);
+    }
+
+    /**
+     * Update book by id
+     *
+     * @param int $id
+     * @param array $data
+     *
+     * @throws \Exception
+     *
+     * @return array
+     */
+    public function updateBookById(int $id, array $data) : array
+    {
+        $bookModel = $this->getBook();
+        $book = $bookModel->updateBookById($id, $data);
+        if ($book) {
+            return $this->formatBook($book);
+        }
+
+        return [];
+    }
+
+    /**
      * Format books array and return books array
      *
      * @param Collection $books
