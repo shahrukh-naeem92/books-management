@@ -30,7 +30,7 @@ class BooksController extends Controller
             return [
                 "status_code" => 200,
                 "status" => "success",
-                "data" => $book->getBooksFromIceAndFireApi($request->get('nameOfABook', ''))
+                "data" => $book->getBooksFromIceAndFireApi($request->get('name', ''))
             ];
         } catch (\Throwable $ex) {
             Log::error($ex->getMessage());
