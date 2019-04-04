@@ -40,6 +40,8 @@ class BaseRequest extends RequestAbstract
 
         if (empty($boundary)) {
             parse_str($raw_data, $data);
+
+            return $data;
         }
 
         // Fetch each part
