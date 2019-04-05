@@ -32,7 +32,7 @@ class BooksControllerTest extends TestCase
      */
     public function testGetBooksFromIceAndFireApi(string $name): void
     {
-        $response = $this->getResponse('GET', '/api/external-books', ['nameOfABook' => $name]);
+        $response = $this->getResponse('GET', '/api/external-books', ['name' => $name]);
         $result = $this->getResponseContentAsArray($response);
         $this->generalBookAssertion(200, 200, 'success', $response, $result);
 
