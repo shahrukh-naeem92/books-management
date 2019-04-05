@@ -38,9 +38,8 @@ class BooksEntity
      */
     public function create(array $data) : array
     {
-        $book = $this->getBook();
-        $book->fill($data);
-        if ($book->save()) {
+        $book = $this->getBook()->saveBook($data);
+        if ($book) {
             $book = $this->formatBook($book);
             unset($book['id']);
             return ['book' => $book];
@@ -56,7 +55,7 @@ class BooksEntity
      *
      * @return array
      */
-    public function getAllBooks(array $filters) : array
+    public function getAllBooks(array $filters = []) : array
     {
         $book = $this->getBook();
 
@@ -119,6 +118,14 @@ class BooksEntity
     }
 
     /**
+     * @return Books
+     */
+    public function getBook() : Books
+    {
+        return new Books();
+    }
+
+    /**
      * Format books array and return books array
      *
      * @param Collection $books
@@ -172,13 +179,5 @@ class BooksEntity
         }
 
         return $booksArray;
-    }
-
-    /**
-     * @return Books
-     */
-    public function getBook() : Books
-    {
-        return new Books();
     }
 }

@@ -79,7 +79,7 @@ class Books extends BaseModel
      *
      * @return Collection
      */
-    public function getAllBooks(array $filters, bool $filterByReleaseYearOnly = true) : Collection
+    public function getAllBooks(array $filters = [], bool $filterByReleaseYearOnly = true) : Collection
     {
         $actualFilters = array_intersect_key($filters, array_flip(Books::$filterable));
         if ($filterByReleaseYearOnly && isset($actualFilters['release_date'])) {
@@ -139,8 +139,27 @@ class Books extends BaseModel
     public function updateBookById(int $id, array $data) : ?self
     {
         $book = $this->getBookByID($id);
+        $actualData = array_intersect_key($data, array_flip($this->fillable));
+        if ($book && $book->fill($actualData) && $book->save()) {
+           return $book;
+        }
 
-        if ($book && $book->fill($data) && $book->save()) {
+        return null;
+    }
+
+    /**
+     * Saves a new book and returns that book
+     *
+     * @param array $data
+     *
+     * @throws \Exception
+     *
+     * @return null|self
+     */
+    public function saveBook(array $data) : ?self
+    {
+        $book = new self();
+        if ($book->fill($data) && $book->save()) {
            return $book;
         }
 

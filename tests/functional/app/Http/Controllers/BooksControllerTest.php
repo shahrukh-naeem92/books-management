@@ -15,7 +15,7 @@ class BooksControllerTest extends TestCase
 {
 
     use DatabaseTransactions;
-    
+
     /**
      * @var string
      */
